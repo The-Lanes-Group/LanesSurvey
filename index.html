@@ -588,7 +588,7 @@ function loadReports(){
 function renderReports(docs){
   const out=document.getElementById('rep-out');
   if(!docs.length){
-    out.innerHTML=`<div class="empty"><h3>No Responses Yet</h3><p>Share the survey link with your DHL depot managers.<br>Each submission will appear here automatically.</p></div>`;
+    out.innerHTML=`<div class="empty"><h3>No Responses Yet</h3></div>`;
     ['k1','k2','k3','k4','k5','k6'].forEach(id=>document.getElementById(id).textContent='—');
     return;
   }
