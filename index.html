@@ -20,8 +20,8 @@ html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
 
 /* ── TOPBAR ── */
-.topbar{background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 40px;height:88px;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.logo-img{height:64px;width:auto;display:block}
+.topbar{background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 40px;height:104px;position:sticky;top:0;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.logo-img{height:96px;width:auto;display:block}
 .logo-fallback{display:none;align-items:center;gap:10px}
 .logo-fallback span{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;color:var(--ink)}
 .logo-fallback small{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--mint);display:block;margin-top:-2px}
@@ -44,10 +44,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 .modal-icon{font-size:38px;margin-bottom:14px}
 .modal h2{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:2px;color:var(--ink);margin-bottom:6px}
 .modal p{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.6}
-.modal-inp{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r);padding:13px 16px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--ink);outline:none;transition:border-color .18s;letter-spacing:2px}
+.modal-label{font-size:10px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;display:block}
+.modal-inp{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r);padding:13px 16px;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--ink);outline:none;transition:border-color .18s;margin-bottom:12px}
 .modal-inp:focus{border-color:var(--mint);background:var(--white)}
 .modal-err{color:var(--red);font-size:12px;font-weight:600;margin-top:8px;display:none}
-.btn-modal{width:100%;margin-top:16px;background:var(--mint);color:var(--white);font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:2px;padding:15px;border:none;border-radius:var(--r);cursor:pointer;transition:all .18s;box-shadow:0 4px 16px rgba(0,196,122,.3)}
+.btn-modal{width:100%;margin-top:4px;background:var(--mint);color:var(--white);font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:2px;padding:15px;border:none;border-radius:var(--r);cursor:pointer;transition:all .18s;box-shadow:0 4px 16px rgba(0,196,122,.3)}
 .btn-modal:hover{background:#009F63}
 
 /* ── HERO ── */
@@ -149,6 +150,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 .btn-close-rp{background:var(--black);color:var(--white);border-color:var(--black)}
 .btn-close-rp:hover{background:#333;border-color:#333;color:var(--white)}
 
+/* Hide export for client role */
+.role-client .export-only{display:none!important}
+
 .rp-hero{background:var(--black);padding:44px 40px 40px;position:relative;overflow:hidden}
 .rp-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 65% 50%,rgba(0,196,122,.12) 0%,transparent 70%);pointer-events:none}
 .rp-hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,4vw,56px);letter-spacing:2px;line-height:1;color:var(--white);margin-bottom:8px;position:relative}
@@ -197,6 +201,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 .source-pill.live{background:#E6FBF2;color:#006640;border:1px solid var(--mint-md)}
 .source-pill.local{background:#FFF8E1;color:#7A4800;border:1px solid #F6C90E}
 
+/* logged-in badge */
+.login-badge{font-size:11px;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:6px;padding:5px 12px;background:var(--bg);border:1px solid var(--border);border-radius:100px}
+.login-badge span{color:var(--mint);font-weight:800}
+
 /* toast */
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--black);color:var(--white);font-size:13px;font-weight:600;padding:12px 22px;border-radius:var(--r);opacity:0;transition:opacity .3s;pointer-events:none;z-index:300;border-left:4px solid var(--mint);white-space:nowrap}
 .toast.show{opacity:1}
@@ -208,6 +216,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
   .rcg{grid-template-columns:1fr}
   .sw,.rw{padding-left:16px;padding-right:16px}
   .fab{right:10px}
+  .logo-img{height:72px}
 }
 </style>
 </head>
@@ -215,15 +224,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 
 <div class="toast" id="toast"></div>
 
-<!-- ════════ PASSWORD MODAL ════════ -->
+<!-- ════════ LOGIN MODAL ════════ -->
 <div class="modal-bg" id="pw-modal">
   <div class="modal">
     <button class="modal-x" onclick="closeModal()">×</button>
     <div class="modal-icon">🔒</div>
     <h2>REPORTS ACCESS</h2>
-    <p>This area is for The Lanes Group team only.<br>Enter your password to view all depot responses.</p>
-    <input class="modal-inp" type="password" id="pw-inp" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkPw()"/>
-    <div class="modal-err" id="pw-err">⚠ Incorrect password — please try again.</div>
+    <p>Authorised users only.<br>Enter your username and password to view depot responses.</p>
+    <label class="modal-label" for="un-inp">Username</label>
+    <input class="modal-inp" type="text" id="un-inp" placeholder="Enter username" autocomplete="username" onkeydown="if(event.key==='Enter')document.getElementById('pw-inp').focus()"/>
+    <label class="modal-label" for="pw-inp">Password</label>
+    <input class="modal-inp" type="password" id="pw-inp" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')checkPw()"/>
+    <div class="modal-err" id="pw-err">⚠ Incorrect username or password — please try again.</div>
     <button class="btn-modal" onclick="checkPw()">View Reports →</button>
   </div>
 </div>
@@ -453,9 +465,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
   <div class="rp-bar">
     <span class="rp-title">📊 DEPOT RESPONSE REPORTS</span>
     <div class="rp-acts">
+      <div class="login-badge" id="login-badge">👤 Logged in as: <span id="login-user-label">—</span></div>
       <button class="btn-s" onclick="loadReports()">↻ Refresh</button>
-      <button class="btn-s" onclick="exportCSV()">⬇ Export CSV</button>
-      <a class="btn-s btn-sheet" href="https://docs.google.com/spreadsheets" target="_blank">📊 Google Sheet</a>
+      <button class="btn-s export-only" onclick="exportCSV()">⬇ Export CSV</button>
+      <a class="btn-s btn-sheet export-only" href="https://docs.google.com/spreadsheets" target="_blank">📊 Google Sheet</a>
       <button class="btn-s btn-close-rp" onclick="closeReports()">✕ Close</button>
     </div>
   </div>
@@ -493,15 +506,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 // ════════════════════════════════════════
 //  CONFIG
 // ════════════════════════════════════════
-const GS_URL   = "https://script.google.com/macros/s/AKfycbxq_8Tb-FFd_S3T1bDBn4JQgUFOlnEopEvBpQNFzKWZDx7wYU55SYuyKP_02LKgS4Na/exec";
-const PASSWORD = "Lanes007";
-const LS_KEY   = "lanesgroup_dhl_v2";
+const GS_URL = "https://script.google.com/macros/s/AKfycby3FWf2hSr4QL5waU-N1JArXvHdKBWfPE4RBOFu8F9S-mySi9gs0FxvtQ6ec_uloxyh/exec";
+const LS_KEY = "lanesgroup_dhl_v2";
 
-// ════════════════════════════════════════
-//  SHARE LINK:
-//  yoursite.github.io/lanessurvey/?reports
-//  → auto-opens the password prompt
-// ════════════════════════════════════════
+// ── USER ACCOUNTS ──
+// role: "admin" = full access (export CSV, Google Sheet link)
+// role: "client" = view-only (no export buttons)
+const USERS = [
+  { username: "Lanes",  password: "Lanes007", role: "admin",  label: "Lanes Group Admin" },
+  { username: "DHL",    password: "DHL2025",  role: "client", label: "DHL Client View"   }
+];
+
+let currentUser = null;
 
 const A = {};
 
@@ -547,18 +563,23 @@ function showToast(msg, ms=3200) {
   setTimeout(() => t.classList.remove('show'), ms);
 }
 
-// ── PASSWORD MODAL ──
+// ── LOGIN MODAL ──
 function openModal() {
   document.getElementById('pw-modal').classList.add('open');
+  document.getElementById('un-inp').value = '';
   document.getElementById('pw-inp').value = '';
   document.getElementById('pw-err').style.display = 'none';
-  setTimeout(() => document.getElementById('pw-inp').focus(), 120);
+  setTimeout(() => document.getElementById('un-inp').focus(), 120);
 }
 function closeModal() {
   document.getElementById('pw-modal').classList.remove('open');
 }
 function checkPw() {
-  if (document.getElementById('pw-inp').value === PASSWORD) {
+  const u = document.getElementById('un-inp').value.trim();
+  const p = document.getElementById('pw-inp').value;
+  const match = USERS.find(x => x.username === u && x.password === p);
+  if (match) {
+    currentUser = match;
     closeModal();
     openReports();
   } else {
@@ -571,14 +592,21 @@ document.getElementById('pw-modal').addEventListener('click', e => { if(e.target
 
 // ── REPORTS PANEL ──
 function openReports() {
-  document.getElementById('rp').classList.add('open');
+  const rp = document.getElementById('rp');
+  rp.classList.add('open');
+  // Apply role class for showing/hiding export buttons
+  rp.classList.remove('role-admin','role-client');
+  if (currentUser) {
+    rp.classList.add('role-' + currentUser.role);
+    document.getElementById('login-user-label').textContent = currentUser.label;
+  }
   document.body.style.overflow = 'hidden';
   loadReports();
 }
 function closeReports() {
   document.getElementById('rp').classList.remove('open');
   document.body.style.overflow = '';
-  // Clean up ?reports from URL without reload
+  currentUser = null;
   const url = new URL(window.location.href);
   url.searchParams.delete('reports');
   window.history.replaceState({}, '', url);
@@ -657,16 +685,14 @@ function doReset() {
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// ── LOAD REPORTS — fetches from Google Sheets via JSONP ──
+// ── LOAD REPORTS ──
 function loadReports() {
   const out = document.getElementById('rep-out');
-  // Show skeleton loader
   out.innerHTML = `<div class="loading-cards">
     ${[1,2,3].map(()=>`<div class="skel"><div class="skel-hd"></div><div class="skel-line w80"></div><div class="skel-line w60"></div><div class="skel-line w50"></div></div>`).join('')}
   </div>`;
   document.getElementById('data-note').textContent = 'Fetching live data from Google Sheets…';
 
-  // Use JSONP to read back from Google Apps Script (bypasses no-cors restriction for GET)
   const cbName = 'gsCallback_' + Date.now();
   const script = document.createElement('script');
   let timedOut = false;
@@ -674,7 +700,6 @@ function loadReports() {
   const timeout = setTimeout(() => {
     timedOut = true;
     cleanup();
-    // Fallback to localStorage
     renderReports(getLocal(), false);
   }, 8000);
 
@@ -683,7 +708,6 @@ function loadReports() {
     if (timedOut) return;
     cleanup();
     if (data && data.rows && data.rows.length) {
-      // Merge: Google Sheet rows + any local-only rows not yet in sheet
       const sheetDepots = new Set(data.rows.map(r => r['Depot']+'|'+r['Submitted At']));
       const localOnly = getLocal().filter(r => !sheetDepots.has(r.depot+'|'+r.submittedAt));
       const merged = [...data.rows.map(mapSheetRow), ...localOnly];
@@ -811,40 +835,12 @@ function exportCSV() {
 
 function esc(s){if(!s)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-// ── ON LOAD: check URL for ?reports param ──
+// ── ON LOAD ──
 updateBadge();
 window.addEventListener('load', () => {
   const params = new URLSearchParams(window.location.search);
-  if (params.has('reports')) {
-    // Auto-open the password modal when ?reports is in the URL
-    openModal();
-  }
+  if (params.has('reports')) openModal();
 });
 </script>
-
-<!-- ════════════════════════════════════════════
-  IMPORTANT: Update your Google Apps Script
-  Add this to the doGet() function so it supports
-  JSONP (needed to read data back in the browser):
-
-  function doGet(e) {
-    const callback = e.parameter.callback;
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
-    const sheet = ss.getSheetByName("Responses");
-    if (!sheet) {
-      const result = JSON.stringify({ status:"ok", rows:[] });
-      return ContentService.createTextOutput(callback+'('+result+')')
-        .setMimeType(ContentService.MimeType.JAVASCRIPT);
-    }
-    const data = sheet.getDataRange().getValues();
-    const headers = data[0];
-    const rows = data.slice(1).map(row => {
-      const obj={};headers.forEach((h,i)=>obj[h]=row[i]);return obj;
-    });
-    const result = JSON.stringify({ status:"ok", rows });
-    return ContentService.createTextOutput(callback+'('+result+')')
-      .setMimeType(ContentService.MimeType.JAVASCRIPT);
-  }
-════════════════════════════════════════════ -->
 </body>
 </html>
