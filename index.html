@@ -118,6 +118,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-
 .btn-close-rp{background:var(--black);color:var(--white);border-color:var(--black)}
 .btn-close-rp:hover{background:#333;border-color:#333;color:var(--white)}
 .role-client .export-only{display:none!important}
+.role-client .admin-only{display:none!important}
+.btn-delete{background:none;border:1.5px solid rgba(229,62,62,.4);color:#E53E3E;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;padding:5px 12px;border-radius:var(--r);cursor:pointer;transition:all .15s}
+.btn-delete:hover{background:#E53E3E;color:var(--white);border-color:#E53E3E}
 .rp-hero{background:var(--black);padding:44px 40px 40px;position:relative;overflow:hidden}
 .rp-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 65% 50%,rgba(0,196,122,.12) 0%,transparent 70%);pointer-events:none}
 .rp-hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,4vw,56px);letter-spacing:2px;line-height:1;color:var(--white);margin-bottom:8px;position:relative}
@@ -614,6 +617,7 @@ function renderCard(d){
     <div><div class="rc-name">${esc(d.depot)}</div>
     <div class="rc-meta">${esc(d.name)} · ${esc(d.role)} · ${esc(d.region)}${d.headcount?' · ~'+esc(d.headcount)+' workers/wk':''}${d.duration?' · '+esc(d.duration):''}${dt?' · '+dt:''}</div></div>
     <div class="rc-score">⭐ ${sc}/10</div>
+    <button class="btn-delete admin-only" onclick="deleteResponse('${esc(d.submittedAt)}')">🗑 Delete</button>
   </div>
   <div class="rcb">
     <div class="rcg">
@@ -634,6 +638,16 @@ function renderCard(d){
     ${d.openFeedback?`<div class="rc-cmt"><div class="rc-cmt-l">💬 Depot Manager Comments</div>"${esc(d.openFeedback)}"</div>`:''}
   </div>
 </div>`;
+}
+
+function deleteResponse(submittedAt){
+  if(!confirm('Are you sure you want to delete this response? This cannot be undone.'))return;
+  let r=getLocal();
+  r=r.filter(d=>d.submittedAt!==submittedAt);
+  localStorage.setItem(LS_KEY,JSON.stringify(r));
+  updateBadge();
+  showToast('🗑 Response deleted');
+  loadReports();
 }
 
 function exportCSV(){
