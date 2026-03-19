@@ -455,6 +455,7 @@ const USERS = [
 let currentUser = null;
 const A = {};
 
+document.addEventListener('DOMContentLoaded', function(){
 ['rq1','rq2','rq5','rq9','rq13'].forEach(id => {
   const w = document.getElementById(id);
   for (let i = 1; i <= 10; i++) {
@@ -466,6 +467,7 @@ const A = {};
     };
     w.appendChild(b);
   }
+});
 });
 
 function selC(id,el,val){document.querySelectorAll('#'+id+' .cb').forEach(b=>b.classList.remove('on'));el.classList.add('on');A[id]=val;answered('qc-'+id);cp();}
