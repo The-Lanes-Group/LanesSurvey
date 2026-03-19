@@ -706,7 +706,10 @@ async function deleteResponse(atId,submittedAt){
 }
 
 async function exportExcel(){
-  const docs=await fetchFromAirtable();,'Job Title','Weekly Headcount','Duration with Lanes','Q1 Satisfaction','Q2 Candidate Quality','Q3 Fill Rate','Q4 Time to Fill','Q5 Compliance','Q6 Induction Ready','Q7 Retention','Q8 Absence Rate','Q9 Responsiveness','Q10 Peak Support','Q11 PSL Ranking','Q12 Value for Money','Q13 Open Feedback'];
+  const docs=await fetchFromAirtable();
+  const allDocs=docs.length?docs:getLocal();
+  if(!allDocs.length){alert('No responses to export yet.');return;}
+  const headers=['Date','Depot','Region','Manager Name','Job Title','Weekly Headcount','Duration with Lanes','Q1 Satisfaction','Q2 Candidate Quality','Q3 Fill Rate','Q4 Time to Fill','Q5 Compliance','Q6 Induction Ready','Q7 Retention','Q8 Absence Rate','Q9 Responsiveness','Q10 Peak Support','Q11 PSL Ranking','Q12 Value for Money','Q13 Open Feedback'];
   const rows=allDocs.map(d=>[
     d.submittedAt?new Date(d.submittedAt).toLocaleDateString('en-GB'):'',
     d.depot||'',d.region||'',d.name||'',d.role||'',d.headcount||'',d.duration||'',
